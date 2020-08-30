@@ -16,22 +16,23 @@ odom_msgs = select(my_bag, 'Topic', odom_topic);
 odom_msg_structs = readMessages(odom_msgs,'DataFormat','struct');
 
 % pick a scan message for test
-first_message = scan_msg_structs{1};
-tolerance = 1.0; % set a tolerance value
-seg = lidarSegmentation2D(first_message.Ranges, first_message.AngleMin,first_message.AngleMax, tolerance);  
+sample_message_num = 2900;
+sample_message = scan_msg_structs{sample_message_num};
+tolerance = 1.0; % set a tolerance value (in meters)
+seg = lidarSegmentation2D(sample_message.Ranges, sample_message.AngleMin, sample_message.AngleMax, tolerance);  
 
 hold on
 grid on
 
 % original data
-ranges = scan_msg_structs{1}.Ranges;
-angles = linspace(scan_msg_structs{1}.AngleMin, scan_msg_structs{1}.AngleMax, numel(scan_msg_structs{1}.Ranges));
+ranges = scan_msg_structs{sample_message_num}.Ranges;
+angles = linspace(scan_msg_structs{sample_message_num}.AngleMin, scan_msg_structs{sample_message_num}.AngleMax, numel(scan_msg_structs{sample_message_num}.Ranges));
 plot(angles, ranges, 'LineWidth', 3);
 
 
 % segmented data
-for sg = seg
-    plot(sg{1}(2,:),sg{1}(1,:), 'LineWidth', 5);
+for s = seg
+    plot(s{1}(2,:),s{1}(1,:), 'LineWidth', 5);
 end
 
 hold off
