@@ -1,2 +1,2 @@
 # matlab_slam
-particle filter slam implementation in MATLAB
+particle filter SLAM implementation in MATLAB
